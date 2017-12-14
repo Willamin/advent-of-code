@@ -62,13 +62,3 @@ class Parser
     @registers.values.max
   end
 end
-
-# ARGF.gets_to_end.try do |input|
-#   Parser.new.tap do |parser|
-#     input.each_line do |line|
-#       parser << line
-#     end
-
-#     pp parser
-#   end
-# end
