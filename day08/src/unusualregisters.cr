@@ -19,22 +19,16 @@ class Parser
 
   def condition?(register, operation, operand)
     operand = operand.to_i
-    case operation
-    when "=="
-      @registers[register] == operand
-    when "!="
-      @registers[register] != operand
-    when "<"
-      @registers[register] < operand
-    when ">"
-      @registers[register] > operand
-    when "<="
-      @registers[register] <= operand
-    when ">="
-      @registers[register] >= operand
-    else
-      raise "Missing conditional definition: #{operation}"
-    end
+    {% begin %}
+      case operation
+      {% for operand in ["==", "!=", "<", ">", "<=", ">="] %}
+      when {{operand}}
+        @registers[register] {{operand.id}} operand
+      {% end %}
+      else
+        raise "Missing conditional definition: #{operation}"
+      end
+    {% end %}
   end
 
   def <<(line : String)
@@ -43,14 +37,16 @@ class Parser
     if_register, if_operation, if_operand = conditional.split
 
     if condition?(if_register, if_operation, if_operand)
-      case operation
-      when "inc"
-        @registers[register] = @registers[register] + operand.to_i
-      when "dec"
-        @registers[register] = @registers[register] - operand.to_i
-      else
-        raise "Missing operation definition"
-      end
+      {% begin %}
+        case operation
+        {% for operation, operator in {"inc": "+", "dec": "-"} %}
+        when {{operation.stringify}}
+          @registers[register] = @registers[register] {{operator.id}} operand.to_i
+        {% end %}
+        else
+          raise "Missing operation definition: #{if_operation}"
+        end
+      {% end %}
     end
   end
 
