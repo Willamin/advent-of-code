@@ -14,6 +14,6 @@ describe UnusualRegisters do
   end
 
   it "works for part2" do
-    UnusualRegisters.part2("input").should eq("output")
+    UnusualRegisters.part2(EXAMPLE).should eq("10")
   end
 end

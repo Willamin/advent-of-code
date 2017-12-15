@@ -10,12 +10,17 @@ module UnusualRegisters
   end
 
   def part2(input : String) : String
-    "not implemented yet"
+    parser = Parser.new
+    input.each_line do |line|
+      parser << line
+    end
+    parser.max_ever.to_s
   end
 end
 
 class Parser
   @registers = Hash(String, Int32).new(0)
+  @max_ever = Int32::MIN
 
   def condition?(register, operation, operand)
     operand = operand.to_i
@@ -48,6 +53,10 @@ class Parser
         end
       {% end %}
     end
+
+    if @registers[register] > @max_ever
+      @max_ever = @registers[register]
+    end
   end
 
   def inspect(io)
@@ -60,5 +69,9 @@ class Parser
 
   def max
     @registers.values.max
+  end
+
+  def max_ever
+    @max_ever
   end
 end
