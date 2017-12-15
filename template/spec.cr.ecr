@@ -1,12 +1,28 @@
 require "spec"
 require "../src/<%= @name.downcase %>"
 
+include Spec::Methods
+
+macro assert(expr)
+  unless {{expr}}
+  {% if expr.name.stringify == "==" %}
+      fail(String.build do |s|
+        s << "Left side:  "
+        s << {{expr.receiver}}.inspect
+        s << "\n"
+        s << "Right side: "
+        s << {{expr.args.first.stringify}}
+      end)
+    {% end %}
+  end
+end
+
 describe <%= @name %> do
   it "works for part1" do
-    <%= @name %>.part1("input").should eq("output")
+    assert <%= @name %>.part1("input") == "output"
   end
 
   it "works for part2" do
-    <%= @name %>.part2("input").should eq("output")
+    assert <%= @name %>.part2("input") == "output"
   end
 end
