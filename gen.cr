@@ -60,6 +60,7 @@ FileUtils.mkdir_p("#{path}")
 FileUtils.mkdir_p("#{path}/spec")
 FileUtils.mkdir_p("#{path}/src")
 File.touch("#{path}/input")
+File.touch("#{path}/prompt.md")
 
 Template.path = path
 template "template/shard.yml.ecr", "shard.yml", name
