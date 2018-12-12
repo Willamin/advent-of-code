@@ -9,8 +9,8 @@ Dir.glob("day*").sort.each do |day|
   Process.run(
     "crystal",
     ["spec"],
-    output: true,
-    error: true
+    output: Process::Redirect::Inherit,
+    error: Process::Redirect::Inherit
   )
   FileUtils.cd("..")
 
