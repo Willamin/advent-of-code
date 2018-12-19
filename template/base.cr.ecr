@@ -1,5 +1,6 @@
 module <%= @name %>
   extend self
+  VERSION = {{ `shards version #{__DIR__}`.chomp.stringify }}
 
   def part1(input : String) : String
     "not implemented yet"

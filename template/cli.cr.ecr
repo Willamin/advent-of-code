@@ -1,9 +1,37 @@
 require "./*"
+require "option_parser"
+
+@[Flags]
+enum Part
+  One
+  Two
+end
+
+part = Part::None
+
+parser = OptionParser.new do |parser|
+  parser.banner = "usage: <%= @name %> [OPTIONS] [INPUT]"
+
+  parser.on("-v", "--version", "display the version") { puts <%= @name %>::VERSION; exit 0 }
+  parser.on("-h", "--help", "show this help") { puts parser; exit 0 }
+
+  parser.on("-1", "--part1", "run a part 1") { part |= Part::One }
+  parser.on("-2", "--part2", "run a part 2") { part |= Part::Two }
+
+  parser.unknown_args { |args| ARGV.replace(args) }
+end
+
+parser.parse!
+part = Part::All if part.none?
 
 ARGF.gets_to_end.try do |input|
-  print "part 1: "
-  puts <%= @name %>.part1(input)
+  if part.one?
+    print "part 1: "
+    puts <%= @name %>.part1(input)
+  end
 
-  print "part 2: "
-  puts <%= @name %>.part2(input)
+  if part.two?
+    print "part 2: "
+    puts <%= @name %>.part2(input)
+  end
 end
