@@ -19,10 +19,28 @@ end
 
 describe InventoryManagementSystem do
   it "works for part1" do
-    assert InventoryManagementSystem.part1("input") == "output"
+    input = <<-INPUT
+    abcdef
+    bababc
+    abbcde
+    abcccd
+    aabcdd
+    abcdee
+    ababab
+    INPUT
+    assert InventoryManagementSystem.part1(input) == "12"
   end
 
   it "works for part2" do
-    assert InventoryManagementSystem.part2("input") == "output"
+    input = <<-INPUT
+    abcde
+    fghij
+    klmno
+    pqrst
+    fguij
+    axcye
+    wvxyz
+    INPUT
+    assert InventoryManagementSystem.part2(input) == "fgij"
   end
 end
